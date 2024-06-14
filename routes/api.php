@@ -16,3 +16,4 @@ use App\Http\Controllers\UsersController;
 */
 
 Route::post('/store', [ UsersController::class, 'store']);
+Route::get('/list-users',[ UsersController::class, 'users']);

@@ -1,6 +1,5 @@
 @extends('layouts.template')
 @section('title', 'employee-app')
-
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -54,7 +53,7 @@
                         "data": "photo",
                         "render": function(data) {
                             return '<img src="' + data +
-                            '" class="avatar" width="50" height="50"/>';
+                                '" class="avatar" width="50" height="50"/>';
                         }
                     },
                     {

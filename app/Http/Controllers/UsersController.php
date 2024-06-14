@@ -74,4 +74,13 @@ class UsersController extends Controller
             'data' => new UserResource($create)
         ], 201);
     }
+
+    public function users()
+    {
+        $users = User::orderBy('id','DESC')->get();
+        return response()->json([
+            'status' => 200,
+            'data' => new UserResource($users)
+        ], 201);
+    }
 }
