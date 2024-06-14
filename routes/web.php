@@ -14,5 +14,7 @@ use App\Http\Controllers\UsersController;
 |
 */
 
-Route::resource('user', UsersController::class);
+Route::get('/', [UsersController::class, 'index'])->name('index');
 Route::get('/list-users',[ UsersController::class, 'listUsers'])->name('users');
+Route::get('/create-user', [ UsersController::class, 'create'])->name('create-user');
+Route::post('/store-user', [ UsersController::class, 'store'])->name('store');

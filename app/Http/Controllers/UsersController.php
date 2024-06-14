@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Resources\UserResource;
 use Yajra\DataTables\Facades\DataTables;
 
 class UsersController extends Controller
@@ -37,7 +39,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        return view('create-user');
     }
 
     /**
@@ -48,51 +50,28 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $create = User::create([
+            'name' => $request->name,
+            'password' => '$2y$10$4yOOm5Ag87w8YofdnHJq0.sPg6Q2UEODp8hqSr8Lhp4Fs7PmF3ssy', // password
+            'email' => $request->email,
+            'emp_code' => Str::random(5),
+            'join_date' => $request->join_date,
+            'position' => $request->position,
+            'emp_status' => $request->emp_status
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
+        if ($request->file('file')) {
+            $file = $request->file('file');
+            $filename = time().'_'.$file->getClientOriginalName();
+            $request->file->storeAs('uploads/', $filename, 'public');
+            $create->update([
+                'photo' => '/storage/uploads/'.$filename
+            ]);
+        }
 
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return response()->json([
+            'status' => 200,
+            'data' => new UserResource($create)
+        ], 201);
     }
 }

@@ -24,9 +24,10 @@ class Users extends Seeder
                 'name' => $faker->name,
                 'email' => $faker->unique()->safeEmail,
                 'email_verified_at' => now(),
-                'emp_id' => Str::random(5),
+                'emp_code' => Str::random(5),
                 'emp_status' => 1,
-                'position' => 'employee',
+                'position' => 'karyawan',
+                'photo' => '/storage/uploads/user.jpg',
                 'password' => '$2y$10$4yOOm5Ag87w8YofdnHJq0.sPg6Q2UEODp8hqSr8Lhp4Fs7PmF3ssy', // password
                 'remember_token' => Str::random(10),
                 'join_date' => Date::now()->format('Y-m-d')
